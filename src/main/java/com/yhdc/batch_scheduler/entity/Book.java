@@ -15,7 +15,7 @@ import java.util.UUID;
 @ToString
 @Getter
 @Setter
-@Table(name = "book")
+@Table(name = "book_tbl")
 @Entity
 public class Book {
 
@@ -31,6 +31,6 @@ public class Book {
     private String author;
 
     @Column(name = "published", length = 10)
-    private String published;
+    private String publishedYear;
 
 }
