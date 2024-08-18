@@ -3,6 +3,7 @@ package com.yhdc.batch_scheduler.configuration;
 import com.yhdc.batch_scheduler.batch.BookAuthorProcessor;
 import com.yhdc.batch_scheduler.batch.BookTitleProcessor;
 import com.yhdc.batch_scheduler.batch.BookWriter;
+import com.yhdc.batch_scheduler.batch.RestBookReader;
 import com.yhdc.batch_scheduler.entity.Book;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -12,6 +13,7 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
@@ -21,6 +23,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -41,10 +44,14 @@ public class BatchConfiguration {
         return new StepBuilder("bookReaderStep", jobRepository)
                 .<Book, Book>chunk(10, transactionManager)
                 .reader(reader())
+//                .reader(restBookReader())
                 .processor(processor())
                 .writer(writer())
                 .build();
     }
+
+
+
 
 
     /**
@@ -87,6 +94,17 @@ public class BatchConfiguration {
                     setTargetType(Book.class);
                 }})
                 .build();
+    }
+
+
+    /**
+     * Rest Book Reader
+     * @return
+     */
+    @Bean
+    @StepScope
+    public ItemReader<Book> restBookReader() {
+        return new RestBookReader("http://localhost:8083/batch/book", new RestTemplate());
     }
 
 
