@@ -2,7 +2,6 @@ package com.yhdc.batch_scheduler.controller;
 
 import com.yhdc.batch_scheduler.entity.Book;
 import com.yhdc.batch_scheduler.repository.BookRepository;
-import com.yhdc.batch_scheduler.service.BookService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

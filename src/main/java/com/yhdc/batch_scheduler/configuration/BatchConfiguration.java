@@ -3,7 +3,6 @@ package com.yhdc.batch_scheduler.configuration;
 import com.yhdc.batch_scheduler.batch.BookAuthorProcessor;
 import com.yhdc.batch_scheduler.batch.BookTitleProcessor;
 import com.yhdc.batch_scheduler.batch.BookWriter;
-import com.yhdc.batch_scheduler.batch.RestBookReader;
 import com.yhdc.batch_scheduler.entity.Book;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
@@ -13,7 +12,6 @@ import org.springframework.batch.core.launch.support.RunIdIncrementer;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemProcessor;
-import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
@@ -23,13 +21,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
 @Configuration
 public class BatchConfiguration {
-
 
     @Bean
     public Job bookReaderJob(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
@@ -51,11 +47,9 @@ public class BatchConfiguration {
     }
 
 
-
-
-
     /**
      * Book Writer
+     *
      * @return
      */
     @Bean
@@ -67,6 +61,7 @@ public class BatchConfiguration {
 
     /**
      * Book Processor
+     *
      * @return
      */
     @Bean
@@ -80,6 +75,7 @@ public class BatchConfiguration {
 
     /**
      * Book Reader
+     *
      * @return
      */
     @Bean
@@ -89,7 +85,7 @@ public class BatchConfiguration {
                 .name("bookReader")
                 .resource(new ClassPathResource("book_data.csv"))
                 .delimited()
-                .names(new String[]{"title", "author", "publishedYear"})
+                .names(new String[]{"title", "author", "published"})
                 .fieldSetMapper(new BeanWrapperFieldSetMapper<>() {{
                     setTargetType(Book.class);
                 }})
@@ -101,11 +97,11 @@ public class BatchConfiguration {
      * Rest Book Reader
      * @return
      */
-    @Bean
-    @StepScope
-    public ItemReader<Book> restBookReader() {
-        return new RestBookReader("http://localhost:8083/batch/book", new RestTemplate());
-    }
+//    @Bean
+//    @StepScope
+//    public ItemReader<Book> restBookReader() {
+//        return new RestBookReader("http://localhost:8083/batch/book", new RestTemplate());
+//    }
 
 
 }

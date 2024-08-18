@@ -12,8 +12,8 @@ public class BookAuthorProcessor implements ItemProcessor<Book, Book> {
     public Book process(Book item) throws Exception {
         log.info("Processing title for {}", item);
         log.info("Book title is {}", item.getAuthor());
-        item.setTitle("by" + item.getAuthor().toUpperCase());
-        return null;
+        item.setAuthor("By" + item.getAuthor().toUpperCase());
+        return item;
     }
 
 }

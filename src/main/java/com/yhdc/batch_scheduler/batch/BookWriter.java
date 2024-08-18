@@ -6,10 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 @Slf4j
-@Component
+@Service
 public class BookWriter implements ItemWriter<Book> {
 
     @Autowired
@@ -20,4 +20,5 @@ public class BookWriter implements ItemWriter<Book> {
         log.info("Writing: {}", chunk.toString());
         bookRepository.saveAll(chunk.getItems());
     }
+
 }

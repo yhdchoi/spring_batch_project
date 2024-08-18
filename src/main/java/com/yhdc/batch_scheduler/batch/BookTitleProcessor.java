@@ -13,7 +13,7 @@ public class BookTitleProcessor implements ItemProcessor<Book, Book> {
         log.info("Processing title for {}", item);
         log.info("Book title is {}", item.getTitle());
         item.setTitle(item.getTitle().toUpperCase());
-        return null;
+        return item;
     }
 
 }

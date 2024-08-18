@@ -31,6 +31,6 @@ public class Book {
     private String author;
 
     @Column(name = "published", length = 10)
-    private String publishedYear;
+    private String published;
 
 }
