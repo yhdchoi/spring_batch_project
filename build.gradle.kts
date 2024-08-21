@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.yhdc"
-version = "spring-batch-quartz 1.0"
+version = "spring-batch-system 1.0"
 
 java {
 	toolchain {
