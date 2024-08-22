@@ -53,8 +53,8 @@ public class ApiOrderGenerateJobConfiguration {
                 .name("apiOrderGenerateWriter")
                 .resource(new PathResource("src/main/resources/datas/" + fileName))
                 .delimited()
-                .names("id", "customerId", "url", "state", "createdAt", "updatedAt")
-                .headerCallback(writer -> writer.write("id,customerId,url,state,createdAt,updatedAt"))
+                .names("id", "customerId", "url", "state", "createdAt")
+                .headerCallback(writer -> writer.write("id,customerId,url,state,createdAt"))
                 .build();
     }
 
