@@ -8,6 +8,6 @@
 - 매주 금요일 1주일 치 1일 정산을 집계해서 DB에 저장하고 고객에게 email로 전달
 
 ### Functions
-- API 호출 이력 파일 만드는 batch
-- 일 단위 정산 batch
-- 주단위 정산 batch
+- API 호출 이력 파일 만드는 batch >>> Completed
+- 일 단위 정산 batch >>> Pending next
+- 주단위 정산 batch >>> Pending
