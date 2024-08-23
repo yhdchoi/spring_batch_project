@@ -19,7 +19,7 @@ import org.springframework.core.io.PathResource;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @RequiredArgsConstructor
-@Configuration
+//@Configuration
 public class ApiOrderGenerateJobConfiguration {
 
     private final JobRepository jobRepository;
