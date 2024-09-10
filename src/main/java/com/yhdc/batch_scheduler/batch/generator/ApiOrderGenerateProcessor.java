@@ -1,7 +1,7 @@
 package com.yhdc.batch_scheduler.batch.generator;
 
-import com.yhdc.batch_scheduler.batch.domain.ServicePolicy;
 import com.yhdc.batch_scheduler.domain.ApiOrder;
+import com.yhdc.batch_scheduler.domain.ServicePolicy;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 
@@ -29,9 +29,8 @@ public class ApiOrderGenerateProcessor implements ItemProcessor<Boolean, ApiOrde
 
         final Long randomCustomerId = customerIds.get(random.nextInt(customerIds.size()));
         final ServicePolicy randomServicePolicy = servicePolicies.get(random.nextInt(servicePolicies.size()));
-        final ApiOrder.State randomState = random.nextInt(5) % 5 == 1
-                ?
-                ApiOrder.State.FAIL : ApiOrder.State.SUCCESS;
+        final ApiOrder.State randomState =
+                random.nextInt(5) % 5 == 1 ? ApiOrder.State.FAIL : ApiOrder.State.SUCCESS;
 
         return new ApiOrder(
                 UUID.randomUUID().toString(),
