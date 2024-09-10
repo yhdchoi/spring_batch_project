@@ -2,6 +2,9 @@ package com.yhdc.batch_scheduler.domain;
 
 import lombok.Getter;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 @Getter
 public enum ServicePolicy {
 
@@ -42,4 +45,19 @@ public enum ServicePolicy {
         this.url = url;
         this.fee = fee;
     }
+
+    public static ServicePolicy findByUrl(String url) {
+        return Arrays.stream(values())
+                .filter(data -> data.url.equals(url))
+                .findFirst()
+                .orElseThrow();
+    }
+
+    public static ServicePolicy findById(Long id) {
+        return Arrays.stream(values())
+                .filter(data -> Objects.equals(data.id, id))
+                .findFirst()
+                .orElseThrow();
+    }
+
 }
