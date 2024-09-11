@@ -9,5 +9,5 @@
 
 ### Functions
 - API 호출 이력 파일 만드는 batch >>> Completed
-- 일 단위 정산 batch >>> Pending next
-- 주단위 정산 batch >>> Pending
+- 일 단위 정산 batch >>> Completed
+- 주단위 정산 batch >>> Completed
