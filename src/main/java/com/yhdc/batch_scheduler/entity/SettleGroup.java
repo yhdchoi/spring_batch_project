@@ -6,7 +6,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.UuidGenerator;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -27,19 +26,25 @@ public class SettleGroup {
     private UUID id;
 
     @Column(name = "customer_id", nullable = false)
-    private Integer customerId;
+    private Long customerId;
 
     @Column(name = "service_id", nullable = false)
-    private Integer serviceId;
+    private Long serviceId;
 
     @Column(name = "total_count")
-    private Integer totalCount;
+    private Long totalCount;
 
     @Column(name = "total_fee")
-    private Integer totalFee;
+    private Long totalFee;
 
-    @CreatedDate
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    public SettleGroup(Long customerId, Long serviceId, Long totalCount, Long totalFee) {
+        this.customerId = customerId;
+        this.serviceId = serviceId;
+        this.totalCount = totalCount;
+        this.totalFee = totalFee;
+        this.createdAt = LocalDateTime.now();
+    }
 }
