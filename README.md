@@ -1,5 +1,5 @@
-# Spring Batch: API Cost Management System
-## API usage cost management batch system
+# Spring Batch: API Cost Management
+## API usage cost management batch
 ### Requirements
 - 고객은 유료 API 사용한다
 - 서비스팀은 유료 API 사용 이력을 남긴다
