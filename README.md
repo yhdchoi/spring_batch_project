@@ -114,7 +114,7 @@ Official Document: https://docs.spring.io/spring-batch/reference/index.html
  ![screenshot](./src/main/resources/img/batch_partn2.png)
 - TaskExecutorPartitionHandler 와 MessageChannelPartitionHandler로 나누어 진다
 
-
+----
 ## Service Overview
 ### Requirements
 - 고객은 유료 API 사용한다
