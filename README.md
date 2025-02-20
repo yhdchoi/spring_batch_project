@@ -1,5 +1,4 @@
 # API Cost Adjuster
-----
 ## About Spring Batch
 Official Document: https://docs.spring.io/spring-batch/reference/index.html
 
@@ -11,7 +10,6 @@ Official Document: https://docs.spring.io/spring-batch/reference/index.html
    - Step1 실행
    - Step2 실행
    - ...
-
 
 ### JobLauncher
 - Job을 실행시키는 도메인
@@ -89,7 +87,6 @@ Official Document: https://docs.spring.io/spring-batch/reference/index.html
 ### ItemWriter
 - 배치의 출력 도메인
 
-----
 ## About Batch Optimization
 ### Chunk
 ![screenshot](./src/main/resources/img/batch_chunk.png)
@@ -118,7 +115,6 @@ Official Document: https://docs.spring.io/spring-batch/reference/index.html
 - TaskExecutorPartitionHandler 와 MessageChannelPartitionHandler로 나누어 진다
 
 
-----
 ## Service Overview
 ### Requirements
 - 고객은 유료 API 사용한다
