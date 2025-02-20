@@ -1,7 +1,7 @@
 # API Cost Adjuster
-----
 API 사용 이력 집계하여 비용을 정산하고 Database에 저장 그리고 전산팀과 고객에게 해당 내용을 email로 전달하는 Batch 서비스 구현.
 
+----
 ## Service Overview
 ### Requirements
 - 고객은 유료 API 사용한다
