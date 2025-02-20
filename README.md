@@ -1,4 +1,23 @@
 # API Cost Adjuster
+----
+## Service Overview
+### Requirements
+- 고객은 유료 API 사용한다
+- 서비스팀은 유료 API 사용 이력을 남긴다
+- 유료 API 사용 이력을 파일로 정산팀에 전달한다 (Random creation)
+- 정산팀은 1일 단위로 정산을 한다
+- 매주 금요일 1주일 치 1일 정산을 집계해서 DB에 저장하고 고객에게 email로 전달
+
+### Functions
+- API 호출 이력 파일 생성
+- 일 단위 정산 기능
+- 주단위 정산 기능
+- 전산팀과 사용자에게 비용 이력 전달 기능
+
+### Job
+1. API 호출로 사용 이력을 불러온다.
+
+----
 ## About Spring Batch
 Official Document: https://docs.spring.io/spring-batch/reference/index.html
 
@@ -114,21 +133,4 @@ Official Document: https://docs.spring.io/spring-batch/reference/index.html
  ![screenshot](./src/main/resources/img/batch_partn2.png)
 - TaskExecutorPartitionHandler 와 MessageChannelPartitionHandler로 나누어 진다
 
-----
-## Service Overview
-### Requirements
-- 고객은 유료 API 사용한다
-- 서비스팀은 유료 API 사용 이력을 남긴다
-- 유료 API 사용 이력을 파일로 정산팀에 전달한다 (Random creation)
-- 정산팀은 1일 단위로 정산을 한다
-- 매주 금요일 1주일 치 1일 정산을 집계해서 DB에 저장하고 고객에게 email로 전달
 
-### Functions
-- API 호출 이력 파일 생성
-- 일 단위 정산 기능
-- 주단위 정산 기능
-- 전산팀과 사용자에게 비용 이력 전달 기능
-
-### Job
-1. API 호출로 사용 이력을 불러온다.
-2. 
