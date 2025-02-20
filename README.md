@@ -20,7 +20,7 @@ API 사용 이력 집계하여 비용을 정산하고 Database에 저장 그리�
 1. API 호출로 사용 이력을 불러온다.
 
 ----
-## About Spring Batch
+## Spring Batch
 Official Document: https://docs.spring.io/spring-batch/reference/index.html
 
 ![screenshot](./src/main/resources/img/batch_diagram1.png)
