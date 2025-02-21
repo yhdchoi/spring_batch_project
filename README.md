@@ -16,9 +16,6 @@ API 사용 이력 집계하여 비용을 정산하고 Database에 저장 그리�
 - 주단위 정산 기능
 - 전산팀과 사용자에게 비용 이력 전달 기능
 
-### Job
-1. API 호출로 사용 이력을 불러온다.
-
 ----
 ## Spring Batch
 Official Document: https://docs.spring.io/spring-batch/reference/index.html
