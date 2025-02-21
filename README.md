@@ -34,12 +34,16 @@ Official Document: https://docs.spring.io/spring-batch/reference/index.html
 
 ### JobLauncher
 - Job을 실행시키는 도메인
-  ![screenshot](./src/main/resources/img/batch_joblauncher.png)
-
+```java
+@FunctionalInterface
+public interface JobLauncher {
+  public JobExecution run(Job job, JobParameters jobParameters) throws JobExecutionAlreadyRunningException,
+          JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException;
+}
+```
 
 ### Job
 ![screenshot](./src/main/resources/img/batch_jobparameters.png)
-
 - 전체 배치 process를 encapsulation한 도메인
 - 단순히 Step 인스턴스를 위한 container
 
@@ -66,7 +70,30 @@ Official Document: https://docs.spring.io/spring-batch/reference/index.html
 - 배치 작업의 독립적이고, 순차적인 단계를 encapsulation한 도메인
 - 하나의 Job은 한 개 이상의 Step을 가짐
 - 입력 자원을 설정하고 어떤 방법으로 어떤 과정을 통해 처리할지 그리고 어떻게 출력 자원을 만들 것인지에 대한 모든 설정
-  ![screenshot](./src/main/resources/img/batch_step-ex.png)
+```java
+@Bean
+public Step step1(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+    return new StepBuilder("step1", jobRepository)
+            .chunk(10, transactionManager)
+            .reader(() -> "read")
+            .processor(read->"process")
+            .writer(process->{})
+            .build();
+}
+
+@Bean
+public Step step2(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+  return new StepBuilder("step2", jobRepository)
+          .tasklet(
+                  (contribution, chunkContext)->{
+                      System.out.println("step2");
+                      return RepeatStatus.FINCHED;
+                  },
+                  transactionManager
+          )
+          .build();
+}
+```
 - reader, processor, writer, tasklet, chunk 로 구성되어있다
 
 ### StepExecution
@@ -100,7 +127,24 @@ Official Document: https://docs.spring.io/spring-batch/reference/index.html
 
 ----
 ### ItemReader/Processor/Writer
-![screenshot](./src/main/resources/img/batch_rpw_sample.png)
+```java
+@FunctionalInterface
+public interface ItemReader<T> {
+  @Nullable
+  T read() throws Exception, UnexepectedInputException, ParseException, NonTransientResourceException;
+}
+
+@FunctionalInterface
+public interface ItemProcessor<I, O> {
+  @Nullable
+  O process(@NonNull I item) throws Exception;
+}
+
+@FunctionalInterface
+public interface ItemWriter<T> {
+    void write(@NonNull Chunk<? extends T> chunk) throws Exception;
+}
+```
 ### ItemReader
 - 배치의 입력 도메인
 ### ItemProcessor
@@ -110,29 +154,85 @@ Official Document: https://docs.spring.io/spring-batch/reference/index.html
 
 ## About Batch Optimization
 ### Chunk
-![screenshot](./src/main/resources/img/batch_chunk.png)
-
+```java
+@Bean
+public Step step1(JobRepository jobRepository, PlateformTransactionManager transactionManger) {
+    return StepBuilder("step1", jobRepository)
+            .chunk(10, transactionManager)
+            .reader(() -> "read")
+            .processor(read->"process")
+            .writer(process->{})
+            .build();
+}
+```
 ### Multi-threaded step
 ![screenshot](./src/main/resources/img/batch_mlp_thread.png)
+```java
+@Bean
+public Step sampleStep(
+        TaskExecutor taskExecutor,
+        JobRepository jobRepository,
+        PlatformTransactionManager transactionManager
+) {
+    return StepBuilder("sampleStep", jobRepository)
+            .<String, String>chunk(10, transactionManager)
+            .reader(itemReader())
+            .writer(itemWriter)
+            .taskExecutor(new SimpleAsyncTaskExecutor())
+            .build();
+}
+```
 - Chunk 단위를 병렬로 빠르게 실행
 - Race Condition이 발생할 수 있음
 - Thread Safe 확인 필수
-  ![screenshot](./src/main/resources/img/batch_threadsafe.png)
-- 샘플
-  ![screenshot](./src/main/resources/img/batch_mlpthread_sample.png)
+
+[//]: # (  ![screenshot]&#40;./src/main/resources/img/batch_threadsafe.png&#41;)
 
 ### Parallel step
 ![screenshot](./src/main/resources/img/batch_pallstep.png)
+```java
+@Bean
+public Job job(JobRepository jobRepository, Step step4, Flow splitFlow) {
+    return new JobBuilder("job", jobRepository)
+            .start(splitFlow)
+            .next(step4)
+            .build() // Builds FlowJobBuilder instance
+            .build(); // Builds Job instance
+}
+
+@Bean
+public Flow splitFlow(Flow flow1, Flow flow2) {
+    return new FlowBuilder<SimpleFlow>("splitFlow")
+            .split(new SimpleAsyncTaskExecutor())
+            .add(flow1, flow2)
+            .build();
+}
+
+@Bean
+public Flow flow1(Step step1, Step step2) {
+    return new FlowBuilder<SimpleFlow>("flow1")
+            .start(step1)
+            .next(step2)
+            .build();
+}
+
+@Bean
+public Flow flow2(Step step3) {
+    return new FlowBuilder<SimpleFlow>("flow2")
+            .start(step3)
+            .build();
+}
+```
+
 - 순차적이 아닌 Step이 병렬로 처리된다
-- 샘플
-![screenshot](./src/main/resources/img/batch_pallstep_sample.png)
 
 ### Partitioning
 ![screenshot](./src/main/resources/img/batch_partn.png)
 - Worker step으로 나누어서 실행된다
 - Multi-thread와 다르다
 - 재시작 지원
- ![screenshot](./src/main/resources/img/batch_partn2.png)
+
+[//]: # ( ![screenshot]&#40;./src/main/resources/img/batch_partn2.png&#41;)
 - TaskExecutorPartitionHandler 와 MessageChannelPartitionHandler로 나누어 진다
 
 
