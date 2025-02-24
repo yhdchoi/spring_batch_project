@@ -3,8 +3,7 @@ API 사용 이력 집계하여 비용을 정산하고 Database에 저장 그리�
 
 ----
 ## Service Overview
-![screenshot](./src/main/resources/img/batch_daily.png)
-![screenshot](./src/main/resources/img/batch_weekly.png)
+![screenshot](./src/main/resources/img/batch_srv_diagram.png)
 
 ### Scenario
 - 고객은 유료 API 사용한다
@@ -166,7 +165,7 @@ public Step step1(JobRepository jobRepository, PlateformTransactionManager trans
 }
 ```
 ### Multi-threaded step
-![screenshot](./src/main/resources/img/batch_mlp_thread.png)
+![screenshot](./src/main/resources/img/batch_mts_diagram.png)
 ```java
 @Bean
 public Step sampleStep(
@@ -189,7 +188,7 @@ public Step sampleStep(
 [//]: # (  ![screenshot]&#40;./src/main/resources/img/batch_threadsafe.png&#41;)
 
 ### Parallel step
-![screenshot](./src/main/resources/img/batch_pallstep.png)
+![screenshot](./src/main/resources/img/batch_ps_diagram.png)
 ```java
 @Bean
 public Job job(JobRepository jobRepository, Step step4, Flow splitFlow) {
@@ -227,7 +226,7 @@ public Flow flow2(Step step3) {
 - 순차적이 아닌 Step이 병렬로 처리된다
 
 ### Partitioning
-![screenshot](./src/main/resources/img/batch_partn.png)
+![screenshot](./src/main/resources/img/batch_prt_diagram.png)
 - Worker step으로 나누어서 실행된다
 - Multi-thread와 다르다
 - 재시작 지원
