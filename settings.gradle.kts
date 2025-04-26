@@ -1,1 +1,1 @@
-rootProject.name = "api_cost_adjuster"
+rootProject.name = "spring_batch_project"
